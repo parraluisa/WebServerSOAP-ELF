@@ -1,13 +1,12 @@
-package arquitectura.arquitectura;
+package com.example.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ArquitecturaApplication {
+public class ProducingWebServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ArquitecturaApplication.class, args);
+		SpringApplication.run(ProducingWebServiceApplication.class, args);
 	}
-
 }

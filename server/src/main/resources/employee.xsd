@@ -1,0 +1,140 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    xmlns:tns="http://com.example.demo.allapis"
+    targetNamespace="http://com.example.demo.allapis" 
+    elementFormDefault="qualified">
+
+    <!-- Employee Info -->
+    <xs:complexType name="employeeInfo">
+    <xs:sequence>
+        <xs:element name="id" type="xs:long"/>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element name="email" type="xs:string"/>
+        <xs:element name="department" type="xs:string"/>
+        <xs:element name="role" type="xs:string"/>
+    </xs:sequence>
+    </xs:complexType>
+
+
+
+
+    <!-- Service Status -->
+    <xs:complexType name="serviceStatus">
+    <xs:sequence>
+        <xs:element name="status" type="xs:string"/>
+        <xs:element name="message" type="xs:string"/>
+    </xs:sequence>
+    </xs:complexType>
+
+
+
+
+    <!--Add Employee Request-->
+    <xs:element name="addEmployeeRequest">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="employeeInfo" type="tns:employeeInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+    <!-- Add Employee Response -->
+    <xs:element name="addEmployeeResponse">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="status" type="tns:serviceStatus"/>
+            <xs:element name="employeeInfo" type="tns:employeeInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+
+
+    <!-- Get  Employee Info Request -->
+    <xs:element name="getEmployeeByIdRequest">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="employeeId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+    <!-- Get Employee Info Response -->
+    <xs:element name="getEmployeeByIdResponse">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="status" type="tns:serviceStatus"/>
+            <xs:element name="employeeInfo" type="tns:employeeInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+
+
+    <!-- Update Employee Info Request -->
+    <xs:element name="updateEmployeeRequest">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="employeeInfo" type="tns:employeeInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+    <!-- Update Employee Info Response -->
+    <xs:element name="updateEmployeeResponse">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="status" type="tns:serviceStatus"/>
+            <xs:element name="employeeInfo" type="tns:employeeInfo"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+
+
+    <!-- Delete Employee Info Request -->
+    <xs:element name="deleteEmployeeRequest">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="employeeId" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+    <!-- Delete Employee Info Response -->
+    <xs:element name="deleteEmployeeResponse">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="status" type="tns:serviceStatus"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+
+    <!-- Get all employees Request -->
+    <xs:element name="getAllEmployeesRequest">
+    <xs:complexType>
+        <xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+    <!-- Type for holding a list of employees -->
+    <xs:complexType name="employeeList">
+    <xs:sequence>
+        <xs:element name="employeeInfo" type="tns:employeeInfo" maxOccurs="unbounded"/>
+    </xs:sequence>
+    </xs:complexType>
+
+    <!-- Get all employees Response -->
+    <xs:element name="getAllEmployeesResponse">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="status" type="tns:serviceStatus"/>
+            <xs:element name="employeeList" type="tns:employeeList"/>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+
+
+
+</xs:schema>
