@@ -42,6 +42,8 @@ const Home = () => {
       console.log('Eliminar empleado con ID:', id);
       // Llama a la función para eliminar el empleado en el backend
       // Después de eliminar, actualiza los empleados
+      const soapClient = await createSoapClient();
+      await soapClient.deleteEmployee(id);
       await fetchData();
     } catch (error) {
       console.error('Error al eliminar empleado:', error);
@@ -52,8 +54,18 @@ const Home = () => {
     e.preventDefault();
     try {
       console.log('Nuevo empleado:', newEmployee);
-      // Llama a la función para agregar el nuevo empleado en el backend
-      // Después de agregar, actualiza los empleados
+
+      const soapClient = await createSoapClient();
+      await soapClient.addEmployee(newEmployee);
+
+      await fetchData();
+      setNewEmployee({
+        id: 0,
+        name: '',
+        email: '',
+        department: '',
+        role: ''
+      });
       await fetchData();
     } catch (error) {
       console.error('Error al agregar nuevo empleado:', error);
