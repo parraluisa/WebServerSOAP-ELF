@@ -14,7 +14,15 @@ interface Employee {
 const Home = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [showUpdateForm, setShowUpdateForm] = useState<boolean>(false);
-  const [updateEmployee, setUpdateEmployee] = useState<Employee | null>(null);
+  const [updateEmployee, setUpdateEmployee] = useState<Employee>(
+    {
+      id: 0,
+      name: '',
+      email: '',
+      department: '',
+      role: ''
+    }
+  );
   const [newEmployee, setNewEmployee] = useState<Employee>({
     id: 0,
     name: '',
@@ -80,10 +88,28 @@ const Home = () => {
       await soapClient.updateEmployee(employee);
 
       await fetchData();
+      setUpdateEmployee({
+        id: 0,
+        name: '',
+        email: '',
+        department: '',
+        role: ''
+      });
       setShowUpdateForm(false);
     } catch (error) {
       console.error('Error al actualizar empleado:', error);
     }
+  }
+
+  const handleCancel = () => {
+    setUpdateEmployee({
+      id: 0,
+      name: '',
+      email: '',
+      department: '',
+      role: ''
+    });
+    setShowUpdateForm(false);
   }
 
   return (
@@ -124,7 +150,6 @@ const Home = () => {
               <td>
                 <button onClick={() => {
                   setShowUpdateForm(true);
-                  console.log('Update button pushed:', employee);
                   setUpdateEmployee(employee);
                   console.log('Update employee:', updateEmployee);
                 }}>Update</button>
@@ -135,17 +160,19 @@ const Home = () => {
           ))}
         </tbody>
       </table>
-      {/* Update container */}
-      {showUpdateForm && (
-        <div id="update-container">
-            <input type="text" id="update-name-input" value={updateEmployee?.name}/>
-            <input type="text" id="update-email-input" value={updateEmployee?.email}/>
-            <input type="text" id="update-department-input"value={updateEmployee?.department}/>
-            <input type="text" id="update-role-input" value={updateEmployee?.role}/>
-            <button id="update-btn" onClick={() => updateEmployee && handleUpdate(updateEmployee)}>Update</button>
-            <button id="cancel-btn" onClick={() => setShowUpdateForm(false)}>Cancel</button>
-        </div>
-      )}
+      <div id="container" className={showUpdateForm ? 'show-update-form' : ''}>
+            <input type="text" placeholder='Name' id="update-name-input" value={updateEmployee?.name} onChange={(e) => setUpdateEmployee({ ...updateEmployee, name: e.target.value })}/>
+            <input type="text" placeholder='Email' id="update-email-input" value={updateEmployee?.email} onChange={(e) => setUpdateEmployee({ ...updateEmployee, email: e.target.value })}/>
+            <input type="text" placeholder='Deparment' id="update-department-input"value={updateEmployee?.department} onChange={(e) => setUpdateEmployee({ ...updateEmployee, department: e.target.value })}/>
+            <input type="text" placeholder='Role' id="update-role-input" value={updateEmployee?.role} onChange={(e) => setUpdateEmployee({ ...updateEmployee, role: e.target.value })}/>
+            <div>
+            <button id="update-btn" onClick={() => handleUpdate(updateEmployee)}>Update</button>
+            {' '}
+            <button id="cancel-btn" onClick={() => handleCancel()}>Cancel</button>
+            </div>
+            
+      </div>
+      
     </div>
   );
 };

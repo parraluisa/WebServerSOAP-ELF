@@ -76,6 +76,10 @@ th {
   margin-top: 20px;
 }
 
+#container.show-update-form #update-container {
+  display: block;
+}
+
 #update-btn {
   background-color: #2196F3;
 }
