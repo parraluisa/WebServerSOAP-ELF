@@ -88,13 +88,7 @@ const Home = () => {
       await soapClient.updateEmployee(employee);
 
       await fetchData();
-      setUpdateEmployee({
-        id: 0,
-        name: '',
-        email: '',
-        department: '',
-        role: ''
-      });
+      handleCancel();
       setShowUpdateForm(false);
     } catch (error) {
       console.error('Error al actualizar empleado:', error);
