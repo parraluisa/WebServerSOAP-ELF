@@ -24,8 +24,8 @@ interface DeleteEmployeeRequest {
 }
 
 interface SoapClient {
-  deleteEmployee // Cambiado a 'any' por simplicidad
-    (id: number): unknown;
+  updateEmployee(employee: Employee): unknown;
+  deleteEmployee(id: number): unknown;
   addEmployee(newEmployee: Employee): unknown;
   getAllEmployees: () => Promise<Employee[]>;
 }
@@ -161,6 +161,37 @@ const createSoapClient = async (): Promise<SoapClient> => {
         // Handle response if needed
       } catch (error) {
         console.error('Error deleting employee:', error);
+        throw error;
+      }
+    },
+    updateEmployee: async (employee: Employee): Promise<void> => {
+      try {
+        const response = await axios.post(
+          serviceUrl, // Use serviceUrl here
+          `
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="http://com.example.demo.allapis">
+          <soapenv:Header/>
+          <soapenv:Body>
+            <com:updateEmployeeRequest>
+              <com:employeeInfo>
+                <com:id>${employee.id}</com:id>
+                <com:name>${employee.name}</com:name>
+                <com:email>${employee.email}</com:email>
+                <com:department>${employee.department}</com:department>
+                <com:role>${employee.role}</com:role>
+              </com:employeeInfo>
+            </com:updateEmployeeRequest>
+          </soapenv:Body>
+        </soapenv:Envelope>
+        `,  {
+            headers: {
+              'Content-Type': 'text/xml; charset=utf-8',
+            },
+          }
+        );
+        }
+      catch (error) {
+        console.error('Error updating employee:', error);
         throw error;
       }
     },

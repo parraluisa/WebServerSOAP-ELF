@@ -72,6 +72,20 @@ const Home = () => {
     }
   };
 
+  const handleUpdate = async (employee: Employee) => {
+    try {
+      console.log('Actualizar empleado:', employee);
+
+      const soapClient = await createSoapClient();
+      await soapClient.updateEmployee(employee);
+
+      await fetchData();
+      setShowUpdateForm(false);
+    } catch (error) {
+      console.error('Error al actualizar empleado:', error);
+    }
+  }
+
   return (
     <div id="container">
       <h1>CRUD Operations</h1>
@@ -108,6 +122,13 @@ const Home = () => {
               <td>{employee.department}</td>
               <td>{employee.role}</td>
               <td>
+                <button onClick={() => {
+                  setShowUpdateForm(true);
+                  console.log('Update button pushed:', employee);
+                  setUpdateEmployee(employee);
+                  console.log('Update employee:', updateEmployee);
+                }}>Update</button>
+                {' '}
                 <button id="delete-btn" onClick={() => handleDelete(employee.id)}>Delete</button>
               </td>
             </tr>
@@ -117,7 +138,12 @@ const Home = () => {
       {/* Update container */}
       {showUpdateForm && (
         <div id="update-container">
-          {/* Código del formulario de edición */}
+            <input type="text" id="update-name-input" value={updateEmployee?.name}/>
+            <input type="text" id="update-email-input" value={updateEmployee?.email}/>
+            <input type="text" id="update-department-input"value={updateEmployee?.department}/>
+            <input type="text" id="update-role-input" value={updateEmployee?.role}/>
+            <button id="update-btn" onClick={() => updateEmployee && handleUpdate(updateEmployee)}>Update</button>
+            <button id="cancel-btn" onClick={() => setShowUpdateForm(false)}>Cancel</button>
         </div>
       )}
     </div>
